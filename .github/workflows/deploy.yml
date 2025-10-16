@@ -62,8 +62,4 @@ jobs:
           TF_VAR_acr_username: ${{ env.ACR_USERNAME }}
           TF_VAR_acr_password: ${{ env.ACR_PASSWORD }}
         run: terraform apply -auto-approve
-
-      # Phase 3: Deploy app infra
-      - name: Terraform Apply (Container App)
-        run: terraform apply -auto-approve
   
