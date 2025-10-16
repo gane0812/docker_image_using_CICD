@@ -52,4 +52,13 @@ resource "azurerm_container_group" "containerInstance" {
       protocol = "TCP"
     }
   }
+  identity {
+    type= "SystemAssigned"
+  }
+}
+
+resource "azurerm_role_assignment" "gane0812_pull" {
+  principal_id = azurerm_container_group.containerInstance.identity[0].principal_id
+  role_definition_name = "gane0812_pull"
+  scope = azurerm_container_registry.acr.id
 }
