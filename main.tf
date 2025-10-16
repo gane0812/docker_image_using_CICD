@@ -52,13 +52,19 @@ resource "azurerm_container_group" "containerInstance" {
       protocol = "TCP"
     }
   }
-  identity {
-    type= "SystemAssigned"
+  image_registry_credential {
+    server = "${azurerm_container_registry.acr.login_server}"
+    username = var.acr_username
+    password = var.acr_password
+
   }
+ /* identity {
+    type= "SystemAssigned"
+  }*/
 }
 
-resource "azurerm_role_assignment" "gane0812_pull" {
+/*resource "azurerm_role_assignment" "gane0812_pull" {
   principal_id = azurerm_container_group.containerInstance.identity[0].principal_id
   role_definition_name = "gane0812_pull"
   scope = azurerm_container_registry.acr.id
-}
+}*/

@@ -51,6 +51,18 @@ jobs:
       - name: Push image
         run: docker push gane0812.azurecr.io/repo/container:v1
 
+      - name: Get ACR credentials
+        id: acr
+        run: |
+          echo "ACR_USERNAME=$(az acr credential show --name gane0812 --query username -o tsv)" >> $GITHUB_ENV
+          echo "ACR_PASSWORD=$(az acr credential show --name gane0812 --query "passwords[0].value" -o tsv)" >> $GITHUB_ENV
+      
+      - name: Terraform Apply
+        env:
+          TF_VAR_acr_username: ${{ env.ACR_USERNAME }}
+          TF_VAR_acr_password: ${{ env.ACR_PASSWORD }}
+        run: terraform apply -auto-approve
+
       # Phase 3: Deploy app infra
       - name: Terraform Apply (Container App)
         run: terraform apply -auto-approve
