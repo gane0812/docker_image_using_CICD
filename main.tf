@@ -40,7 +40,7 @@ resource "azurerm_container_group" "containerInstance" {
   name = "aci"
   resource_group_name = azurerm_resource_group.container_Rg.name
   location = azurerm_resource_group.container_Rg.location
-  os_type = "linux"
+  os_type = "Linux"
   container {
     name = "container"
     image = "${azurerm_container_registry.acr.login_server}/repo/container:v1"
